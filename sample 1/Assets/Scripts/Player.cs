@@ -19,23 +19,25 @@ public class Player : MonoBehaviour
     private float firerate = 0.4f;
     private float canfire = -1f;
     [SerializeField]
-    private float _lives = 4;
+    private int _lives = 3;
     private SpwanManager spwanManager;
     [SerializeField]
     private bool _istripleshotactive = false;
     private bool _isSpeedBoostActive = false;
-    [SerializeField]
     private bool _isShieldActive = false;
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
     private int _score;
+    private UIManager _uiManager;
     
     void Start()
     {
         // assign to new position to (0,0,0)
         transform.position = new Vector3(0, 0, 0);
         spwanManager = GameObject.Find("Spwan_Manager").GetComponent<SpwanManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
 
         
     }
@@ -102,10 +104,12 @@ public class Player : MonoBehaviour
         }
         _lives--;
 
-        if (_lives < 1)
+        _uiManager.UpdateLives(_lives);
+        if (_lives == 0)
         {
             Destroy(this.gameObject);
-            spwanManager.isPlayerDead();    
+            spwanManager.isPlayerDead();
+            _uiManager.GameOver();
         }
     }
     public void ShieldPlayer()
@@ -135,5 +139,10 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _isSpeedBoostActive = false;
+    }
+    public void addScore(int points)
+    {
+        _score += points;
+        _uiManager.updateScore(_score);
     }
  }
