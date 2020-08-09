@@ -14,8 +14,7 @@ public class SpwanManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpwanEnemyRoutine());
-        StartCoroutine(SpwanPowerupRountine());
+       
     }
 
     // Update is called once per frame
@@ -25,6 +24,7 @@ public class SpwanManager : MonoBehaviour
     }
     IEnumerator SpwanPowerupRountine()
     {
+        yield return new WaitForSeconds(3.0f);
         while (_spwanControl == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
@@ -35,7 +35,8 @@ public class SpwanManager : MonoBehaviour
     }
     IEnumerator SpwanEnemyRoutine()
     {
-        while(_spwanControl == false)
+        yield return new WaitForSeconds(3.0f);
+        while (_spwanControl == false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
@@ -47,5 +48,10 @@ public class SpwanManager : MonoBehaviour
     public void isPlayerDead()
     {
         _spwanControl = true;
+    }
+    public void StartSpwan()
+    {
+        StartCoroutine(SpwanEnemyRoutine());
+        StartCoroutine(SpwanPowerupRountine());
     }
 }

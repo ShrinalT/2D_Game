@@ -28,8 +28,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
+    private GameObject _RightEngine, _LeftEngine;
+    [SerializeField]
     private int _score;
     private UIManager _uiManager;
+
     
     void Start()
     {
@@ -102,7 +105,15 @@ public class Player : MonoBehaviour
             _shield.SetActive(_isShieldActive);
             return;
         }
-        _lives--;
+        _lives--; 
+        if (_lives == 2)
+        {
+            _RightEngine.SetActive(true);
+        }
+        if(_lives == 1)
+        {
+            _LeftEngine.SetActive(true);
+        }
 
         _uiManager.UpdateLives(_lives);
         if (_lives == 0)
