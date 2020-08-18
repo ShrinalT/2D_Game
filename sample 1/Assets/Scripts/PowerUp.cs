@@ -9,8 +9,13 @@ public class PowerUp : MonoBehaviour
     private float dspeed = 3.0f;
     [SerializeField]
     private float powerid;
+    [SerializeField]
+    private AudioClip _clip;
+    
     void Start()
     {
+        
+        
         
     }
 
@@ -32,6 +37,7 @@ public class PowerUp : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if(player != null)
             {
+                AudioSource.PlayClipAtPoint(_clip, transform.position);
                 switch (powerid)
                 {
                     case 0:

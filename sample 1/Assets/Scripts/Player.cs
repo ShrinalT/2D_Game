@@ -32,6 +32,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score;
     private UIManager _uiManager;
+    [SerializeField]
+    private AudioClip _laserSound;
+    [SerializeField]
+    private AudioSource _audioSource;
 
     
     void Start()
@@ -40,6 +44,17 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         spwanManager = GameObject.Find("Spwan_Manager").GetComponent<SpwanManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
+        if(_audioSource == null)
+        {
+            Debug.Log("Error on player audio sourcee");
+        }
+        else
+        {
+            _audioSource.clip = _laserSound;
+        }
+
+         
 
 
         
@@ -52,6 +67,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > canfire)
         {
             shootmtd();
+            _audioSource.Play();
         }
 
             //spwan our laser
